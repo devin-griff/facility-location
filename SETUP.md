@@ -29,16 +29,16 @@ cd $APP_SLUG
 
 ## 2. Substitute placeholders
 
-Replace `<APP_SLUG>`, `<APP_TITLE>`, `<APP_NAME>`, and `<APP_TAGLINE>` in
+Replace `facility-location`, `Facility Location`, `griffith-pse-facility-location`, and `Where to open warehouses — uncapacitated facility location` in
 every text file (including the Dockerfile and fly.toml):
 
 ```bash
 find . -type f \( -name '*.py' -o -name '*.md' -o -name '*.toml' -o -name 'Dockerfile' \) \
     -exec sed -i \
-    "s|<APP_SLUG>|$APP_SLUG|g; \
-     s|<APP_TITLE>|$APP_TITLE|g; \
-     s|<APP_NAME>|griffith-pse-$APP_SLUG|g; \
-     s|<APP_TAGLINE>|$APP_TAGLINE|g" {} +
+    "s|facility-location|$APP_SLUG|g; \
+     s|Facility Location|$APP_TITLE|g; \
+     s|griffith-pse-facility-location|griffith-pse-$APP_SLUG|g; \
+     s|Where to open warehouses — uncapacitated facility location|$APP_TAGLINE|g" {} +
 ```
 
 Sanity check — no placeholders left:
@@ -109,10 +109,10 @@ gh secret list --repo devin-griff/$APP_SLUG
 
 In the Cloudflare dashboard for `griffith-pse.com`:
 
-- Type **A**, name `<APP_SLUG>`, value `66.241.124.X` (Fly's edge — get the
+- Type **A**, name `facility-location`, value `66.241.124.X` (Fly's edge — get the
   exact IP from `flyctl certs add` below; often the same IP used by other
   apps in your org)
-- Type **AAAA**, name `<APP_SLUG>`, value `2a09:8280:1::112:XXXX:0`
+- Type **AAAA**, name `facility-location`, value `2a09:8280:1::112:XXXX:0`
 - **Both records must be DNS-only (gray cloud)**, not Proxied. Streamlit's
   WebSocket connections won't survive Cloudflare's proxy on Fly origins.
 
@@ -143,11 +143,11 @@ add a new entry to `index.qmd` under "Featured demos":
 
 ```markdown
 ::: {.g-col-12 .g-col-md-4}
-### <APP_TITLE>
+### Facility Location
 
 <short description of what the app does>
 
-[Launch demo →](https://<APP_SLUG>.griffith-pse.com){.btn .btn-primary target="_blank"}
+[Launch demo →](https://facility-location.griffith-pse.com){.btn .btn-primary target="_blank"}
 :::
 ```
 

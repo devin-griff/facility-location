@@ -40,7 +40,7 @@ COPY app.py favicon.png ./
 # already shows our app name and the blackletter-G favicon, instead of the
 # default "Streamlit" title flashing for ~1s before being replaced.
 RUN STATIC=$(python -c "import streamlit, os; print(os.path.join(os.path.dirname(streamlit.__file__), 'static'))") \
-    && sed -i 's|<title>Streamlit</title>|<title><APP_TITLE></title>|' "$STATIC/index.html" \
+    && sed -i 's|<title>Streamlit</title>|<title>Facility Location</title>|' "$STATIC/index.html" \
     && cp /app/favicon.png "$STATIC/favicon.png"
 
 # Run as a non-root user. If a future Streamlit (or transitive dep) RCE
