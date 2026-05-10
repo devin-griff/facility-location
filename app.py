@@ -328,9 +328,11 @@ def render_instance():
 
 CSS = """
 <style>
+/* Top padding shared across the template family — clears the sticky
+   header without clipping the title. See griffith-pse-app-template. */
 .block-container,
 [data-testid="stMainBlockContainer"] {
-    padding-top: 4rem !important;
+    padding-top: 2.5rem !important;
 }
 /* Toggle buttons for facility selection. Smaller, denser than default. */
 .stButton > button {
