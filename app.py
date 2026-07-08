@@ -455,6 +455,26 @@ CSS = """
 [class*="st-key-map_legend"] {
     margin-bottom: -1rem;
 }
+/* Home-link logo at the very top of the sidebar, in normal document flow
+   so it scrolls with the sidebar content (not pinned to the viewport). */
+.home-logo-corner {
+    display: inline-block;   /* shrink to the icon so only the G is clickable */
+    margin: 0 0 0.75rem;
+}
+.home-logo-corner img {
+    width: 32px; height: 32px; border-radius: 4px; display: block;
+}
+/* Hide Streamlit's sticky sidebar header (which hosts the «« collapse
+   arrow) so the home-logo sits at the very top of the sidebar with no
+   chrome above it. Trade-off: the user can no longer collapse the sidebar
+   via the button. The sidebar is the app's control panel and is meant
+   to stay visible, so this is fine for this app. */
+[data-testid="stSidebarHeader"] {
+    display: none !important;
+}
+[data-testid="stSidebarUserContent"] {
+    padding-top: 0.5rem !important;
+}
 </style>
 """
 
@@ -958,30 +978,6 @@ st.markdown(CSS, unsafe_allow_html=True)
 _FAVICON_DATA_URL = "data:image/png;base64," + base64.b64encode(
     (Path(__file__).parent / "favicon.png").read_bytes()
 ).decode()
-st.markdown("""
-<style>
-/* Home-link logo at the very top of the sidebar, in normal document flow
-   so it scrolls with the sidebar content (not pinned to the viewport). */
-.home-logo-corner {
-    display: inline-block;   /* shrink to the icon so only the G is clickable */
-    margin: 0 0 0.75rem;
-}
-.home-logo-corner img {
-    width: 32px; height: 32px; border-radius: 4px; display: block;
-}
-/* Hide Streamlit's sticky sidebar header (which hosts the «« collapse
-   arrow) so the home-logo sits at the very top of the sidebar with no
-   chrome above it. Trade-off: the user can no longer collapse the sidebar
-   via the button. The sidebar is the app's control panel and is meant
-   to stay visible, so this is fine for this app. */
-[data-testid="stSidebarHeader"] {
-    display: none !important;
-}
-[data-testid="stSidebarUserContent"] {
-    padding-top: 0.5rem !important;
-}
-</style>
-""", unsafe_allow_html=True)
 st.sidebar.markdown(
     f'<a class="home-logo-corner" href="https://griffith-pse.com" target="_self">'
     f'<img src="{_FAVICON_DATA_URL}" alt="Griffith PSE — home" />'
