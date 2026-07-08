@@ -40,7 +40,8 @@ Location," *Operations Research*, vol. 26, no. 6, pp. 992–1009, 1978.
 
 [3] G. Cornuéjols, G. L. Nemhauser, and L. A. Wolsey, "The Uncapacitated
 Facility Location Problem," in *Discrete Location Theory*,
-P. B. Mirchandani and R. L. Francis, Eds. New York: Wiley, 1990.
+P. B. Mirchandani and R. L. Francis, Eds. New York: Wiley, 1990,
+pp. 119–171.
 
 [4] M. L. Bynum, G. A. Hackebeil, W. E. Hart, C. D. Laird, B. L. Nicholson,
 J. D. Siirola, J.-P. Watson, and D. L. Woodruff, *Pyomo — Optimization
