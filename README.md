@@ -1,6 +1,6 @@
 # Facility Location
 
-Where to open warehouses — uncapacitated facility location
+Where to open warehouses: uncapacitated facility location
 
 **Live demo:** https://facility-location.griffith-pse.com  
 **Home:** https://griffith-pse.com
@@ -22,11 +22,11 @@ auto-stop machines. Custom domain wired through Cloudflare DNS.
 
 ## Files
 
-- `app.py` — Streamlit UI and computation
-- `requirements.txt` — Python deps
-- `favicon.png` — Griffith PSE blackletter G favicon
-- `Dockerfile`, `fly.toml`, `.dockerignore` — Fly.io production image config
-- `.github/workflows/deploy.yml` — auto-deploy pipeline
+- `app.py`: Streamlit UI and computation
+- `requirements.txt`: Python deps
+- `favicon.png`: Griffith PSE blackletter G favicon
+- `Dockerfile`, `fly.toml`, `.dockerignore`: Fly.io production image config
+- `.github/workflows/deploy.yml`: auto-deploy pipeline
 
 ## References
 
@@ -44,6 +44,6 @@ P. B. Mirchandani and R. L. Francis, Eds. New York: Wiley, 1990,
 pp. 119–171.
 
 [4] M. L. Bynum, G. A. Hackebeil, W. E. Hart, C. D. Laird, B. L. Nicholson,
-J. D. Siirola, J.-P. Watson, and D. L. Woodruff, *Pyomo — Optimization
+J. D. Siirola, J.-P. Watson, and D. L. Woodruff, *Pyomo: Optimization
 Modeling in Python*, 3rd ed. Cham: Springer, 2021.
 [Springer](https://link.springer.com/book/10.1007/978-3-030-68928-5)

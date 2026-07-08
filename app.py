@@ -1,5 +1,5 @@
 # =============================================================================
-# Facility Location — a Streamlit tutorial app.
+# Facility Location: a Streamlit tutorial app.
 #
 # Uncapacitated Facility Location (UFL): given a set of candidate facility
 # sites and a set of customers, decide which facilities to open and how to
@@ -18,26 +18,26 @@
 # buttons) and the app shows their total cost alongside the optimum.
 #
 # Library roadmap:
-#   - streamlit  — UI framework. Each interaction reruns this script
+#   - streamlit : UI framework. Each interaction reruns this script
 #                  top-to-bottom; persistent state lives in `st.session_state`.
-#   - pyomo      — algebraic modeling: sets, params, vars, objective,
+#   - pyomo     : algebraic modeling: sets, params, vars, objective,
 #                  constraints. Continuous + binary variables.
-#   - Gurobi     — the MILP solver, called via Pyomo's appsi_gurobi interface.
+#   - Gurobi    : the MILP solver, called via Pyomo's appsi_gurobi interface.
 #                  Ships as a pip wheel (`gurobipy`); needs a Gurobi license
 #                  (WLS via Fly secrets in production, or a local license file
 #                  pointed to by GRB_LICENSE_FILE).
-#   - pandas     — DataFrames for the editable site/customer tables.
-#   - altair     — the 2D map plot (sites + customers + assignment lines).
+#   - pandas    : DataFrames for the editable site/customer tables.
+#   - altair    : the 2D map plot (sites + customers + assignment lines).
 #
 # File roadmap:
-#   1. Solver       — model definition, Gurobi log capture, top-level solve.
-#   2. State        — session_state init / reset.
-#   3. Utilities    — random-scenario generation, distance, user cost.
-#   4. LaTeX        — General + Instance formulation rendering.
-#   5. CSS          — small style tweaks for the toggle button grid.
-#   6. Tabs         — render_optimizer / render_data / render_formulation /
+#   1. Solver      : model definition, Gurobi log capture, top-level solve.
+#   2. State       : session_state init / reset.
+#   3. Utilities   : random-scenario generation, distance, user cost.
+#   4. LaTeX       : General + Instance formulation rendering.
+#   5. CSS         : small style tweaks for the toggle button grid.
+#   6. Tabs        : render_optimizer / render_data / render_formulation /
 #                     render_logs.
-#   7. Main         — page config, sidebar, tab assembly.
+#   7. Main        : page config, sidebar, tab assembly.
 # =============================================================================
 
 import base64
@@ -56,11 +56,11 @@ from pyomo.common.tee import capture_output
 
 def _materialize_gurobi_license():
     """Production license shim. Fly secrets surface as environment
-    variables, but gurobipy wants a license FILE — so if the three WLS
+    variables, but gurobipy wants a license FILE: so if the three WLS
     values are present and no license file is configured, write one to
     the home directory and point GRB_LICENSE_FILE at it. Local dev is
     untouched: there GRB_LICENSE_FILE already points at a file on disk.
-    The values never enter the repo or image — only Fly's secret store
+    The values never enter the repo or image: only Fly's secret store
     and the container's private filesystem."""
     if os.environ.get("GRB_LICENSE_FILE"):
         return
@@ -88,7 +88,7 @@ _materialize_gurobi_license()
 MAX_SITES = 25
 MAX_CUSTOMERS = 60
 
-# Color palette — red for the user's solution, green for the optimal,
+# Color palette: red for the user's solution, green for the optimal,
 # purple where they overlap (facility opened in both).
 COLOR_USER = "#dc2626"
 COLOR_OPT = "#16a34a"
@@ -159,7 +159,7 @@ def _solve_capturing(m):
             results = solver.solve(m, tee=True)
         log_text = buf.getvalue()
     # Scrub license-identifying lines from the captured log before it
-    # reaches the public Logs tab — Gurobi's WLS banner prints the
+    # reaches the public Logs tab: Gurobi's WLS banner prints the
     # license ID and registrant ("WLS license NNNNNNN - registered to
     # ..."). Substring match keeps this robust to wording shifts across
     # Gurobi versions.
@@ -217,13 +217,13 @@ def make_scenario(n_sites, n_customers, seed):
     sites = pd.DataFrame({
         "x": rng.uniform(0.05, 1.95, n_sites).round(3),
         "y": rng.uniform(0.05, 0.95, n_sites).round(3),
-        # Fixed cost varies in [0.4, 1.2] — meaningful spread, doesn't dominate
+        # Fixed cost varies in [0.4, 1.2]: meaningful spread, doesn't dominate
         "fixed_cost": rng.uniform(0.4, 1.2, n_sites).round(3),
     })
     customers = pd.DataFrame({
         "x": rng.uniform(0.0, 2.0, n_customers).round(3),
         "y": rng.uniform(0.0, 1.0, n_customers).round(3),
-        # Demand in [0.5, 1.5] — modest spread, no zero demand
+        # Demand in [0.5, 1.5]: modest spread, no zero demand
         "demand": rng.uniform(0.5, 1.5, n_customers).round(3),
     })
     return sites, customers
@@ -344,7 +344,7 @@ def render_general():
         \end{aligned}
     """)
     st.caption(
-        "Note: this is the **multi-source** UFL — a customer could split its "
+        "Note: this is the **multi-source** UFL: a customer could split its "
         "demand across facilities, but with no capacity limits a split is "
         "never beneficial, so optimal assignments are single-source (up to "
         "exact-distance ties)."
@@ -366,7 +366,7 @@ def render_general():
         "Wiley, 1990, pp. 119–171.\n\n"
         "[4] M. L. Bynum, G. A. Hackebeil, W. E. Hart, C. D. Laird, "
         "B. L. Nicholson, J. D. Siirola, J.-P. Watson, and D. L. Woodruff, "
-        "*Pyomo — Optimization Modeling in Python*, 3rd ed. "
+        "*Pyomo: Optimization Modeling in Python*, 3rd ed. "
         "Cham: Springer, 2021. "
         "[Springer](https://link.springer.com/book/10.1007/978-3-030-68928-5)"
     )
@@ -445,7 +445,7 @@ def render_instance():
 
 CSS = """
 <style>
-/* Top padding shared across the template family — clears the sticky
+/* Top padding shared across the template family: clears the sticky
    header without clipping the title. See griffith-pse-app-template. */
 .block-container,
 [data-testid="stMainBlockContainer"] {
@@ -572,13 +572,13 @@ def build_map(sites, customers, user_opened, optimal, user_assign):
     # ---- Layers ----
     base_axis = alt.Axis(grid=False, labels=False, ticks=False, domain=False, title=None)
     # Padded domains with the x padding doubled, so the x span (2.2) is
-    # exactly twice the y span (1.1) — matching the 1200x600 canvas keeps
+    # exactly twice the y span (1.1): matching the 1200x600 canvas keeps
     # pixels-per-unit identical on both axes.
     x_dom = [-0.1, 2.1]
     y_dom = [-0.05, 1.05]
 
     # Stylized "service territory" backdrop: a soft sage region with a white
-    # street-like grid. Purely decorative — the coordinates are synthetic, so
+    # street-like grid. Purely decorative: the coordinates are synthetic, so
     # this deliberately avoids looking like real geography.
     bg_rect = (
         alt.Chart(pd.DataFrame({"x": [0.0], "y": [0.0],
@@ -783,7 +783,7 @@ def render_optimizer():
     # Your cost: neutral until an optimum exists to compare against, then
     # green on a match and red otherwise.
     if user_cost is None:
-        _colored_metric(metric_l, "Your cost", "—", "inherit")
+        _colored_metric(metric_l, "Your cost", "-", "inherit")
     elif not solved:
         _colored_metric(metric_l, "Your cost", f"{user_cost:.2f}", "inherit")
     else:
@@ -794,7 +794,7 @@ def render_optimizer():
         _colored_metric(metric_r, "Optimal cost", f"{optimal['cost']:.2f}",
                         COLOR_OPT)
     else:
-        _colored_metric(metric_r, "Optimal cost", "—", "inherit")
+        _colored_metric(metric_r, "Optimal cost", "-", "inherit")
 
     # Solve-state badge: a small fixed pill instead of an info box that
     # appears and disappears (which shifted the layout).
@@ -816,7 +816,7 @@ def render_optimizer():
             unsafe_allow_html=True,
         )
 
-    # Map. Click any site marker (× or ■) to toggle it open/closed —
+    # Map. Click any site marker (× or ■) to toggle it open/closed -
     # clicks propagate back via on_select="rerun". Marker size encodes the
     # site's fixed open cost.
     # Keyed container so CSS can pull the chart below closer to the legend.
@@ -980,7 +980,7 @@ _FAVICON_DATA_URL = "data:image/png;base64," + base64.b64encode(
 ).decode()
 st.sidebar.markdown(
     f'<a class="home-logo-corner" href="https://griffith-pse.com" target="_self">'
-    f'<img src="{_FAVICON_DATA_URL}" alt="Griffith PSE — home" />'
+    f'<img src="{_FAVICON_DATA_URL}" alt="Griffith PSE: home" />'
     f'</a>',
     unsafe_allow_html=True,
 )
@@ -1001,7 +1001,7 @@ if st.sidebar.button("Reset scenario", use_container_width=True):
     reset_scenario(n_sites, n_customers, seed)
     st.rerun()
 # If the user changed N or seed without clicking re-randomize, do it for them
-# (small UX nicety — slider drag should feel live)
+# (small UX nicety: slider drag should feel live)
 if (len(st.session_state.sites) != n_sites
     or len(st.session_state.customers) != n_customers
     or st.session_state.get("_last_seed") != seed):
@@ -1028,7 +1028,7 @@ st.session_state._last_costs = this_costs
 
 solve_btn = st.sidebar.button("Solve Optimization", type="primary",
                               use_container_width=True)
-# Placeholder for Set at Optimum — filled AFTER the solve handler below, so
+# Placeholder for Set at Optimum: filled AFTER the solve handler below, so
 # the button appears on the same run a solve completes (the sidebar renders
 # before the solve runs).
 _setopt_slot = st.sidebar.empty()
