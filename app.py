@@ -352,7 +352,19 @@ def render_general():
 
     st.markdown("**References**")
     st.markdown(
-        "[1] M. L. Bynum, G. A. Hackebeil, W. E. Hart, C. D. Laird, "
+        "[1] A. A. Kuehn and M. J. Hamburger, \"A Heuristic Program for "
+        "Locating Warehouses,\" *Management Science*, vol. 9, no. 4, "
+        "pp. 643–666, 1963. "
+        "[INFORMS](https://pubsonline.informs.org/doi/10.1287/mnsc.9.4.643)\n\n"
+        "[2] D. Erlenkotter, \"A Dual-Based Procedure for Uncapacitated "
+        "Facility Location,\" *Operations Research*, vol. 26, no. 6, "
+        "pp. 992–1009, 1978. "
+        "[INFORMS](https://pubsonline.informs.org/doi/10.1287/opre.26.6.992)\n\n"
+        "[3] G. Cornuéjols, G. L. Nemhauser, and L. A. Wolsey, \"The "
+        "Uncapacitated Facility Location Problem,\" in *Discrete Location "
+        "Theory*, P. B. Mirchandani and R. L. Francis, Eds. New York: "
+        "Wiley, 1990.\n\n"
+        "[4] M. L. Bynum, G. A. Hackebeil, W. E. Hart, C. D. Laird, "
         "B. L. Nicholson, J. D. Siirola, J.-P. Watson, and D. L. Woodruff, "
         "*Pyomo — Optimization Modeling in Python*, 3rd ed. "
         "Cham: Springer, 2021. "
